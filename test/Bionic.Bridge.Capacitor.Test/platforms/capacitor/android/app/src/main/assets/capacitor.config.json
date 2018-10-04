@@ -1,0 +1,6 @@
+{
+  "appId": "bionic.bridge.capacitor",
+  "appName": "CapacitorBridge",
+  "bundledWebRuntime": true,
+  "webDir": "www"
+}

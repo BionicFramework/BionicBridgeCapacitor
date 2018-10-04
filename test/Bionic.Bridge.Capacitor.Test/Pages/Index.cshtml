@@ -1,0 +1,1180 @@
+@page "/"
+
+<h1>Bionic Capacitor Bridge</h1>
+
+<h3>Console</h3>
+<button class="btn btn-primary" onclick="@ConsoleLog">Log to JS Console</button>
+<button class="btn btn-primary" onclick="@ConsoleLogObject">Log object to JS Console</button>
+
+<br/><br/>
+
+<h3>Toast</h3>
+<button class="btn btn-primary" onclick="@Toast">Make a toast</button>
+
+<br/><br/>
+
+<h3>Camera</h3>
+@if (ImageSrc != null) {
+    <img src="@ImageSrc" alt="Captured Image" height="200px"/>
+    <br/>
+}
+<button class="btn btn-primary" onclick="@Camera">Take a picture</button>
+
+<br/><br/>
+
+<h3>Device</h3>
+@if (DeviceData != null) {
+    <span>Model: @DeviceData.model</span>
+    <br/>
+    <span>Platform: @DeviceData.platform</span>
+    <br/>
+    <span>UUID: @DeviceData.uuid</span>
+    <br/>
+    <span>App Version: @DeviceData.appVersion</span>
+    <br/>
+    <span>OS Version: @DeviceData.osVersion</span>
+    <br/>
+    <span>Manufacturer: @DeviceData.manufacturer</span>
+    <br/>
+    <span>Is Virtual: @DeviceData.isVirtual</span>
+    <br/>
+    <span>Mem Used: @DeviceData.memUsed</span>
+    <br/>
+    <span>Disk Free: @DeviceData.diskFree</span>
+    <br/>
+    <span>Disk Total: @DeviceData.diskTotal</span>
+    <br/>
+    <span>Battery Level: @DeviceData.batteryLevel</span>
+    <br/>
+    <span>Is Charging: @DeviceData.isCharging</span>
+    <br/>
+}
+<button class="btn btn-primary" onclick="@Device">Get Device Info</button>
+
+<br/><br/>
+
+<h3>Geolocation</h3>
+@if (CurrentPosition != null) {
+    <span>Latitude: @CurrentPosition.coords.latitude</span>
+    <br/>
+    <span>Longitude: @CurrentPosition.coords.longitude</span>
+    <br/>
+    <span>Accuracy: @CurrentPosition.coords.accuracy</span>
+    <br/>
+    <span>Altitude: @CurrentPosition.coords.altitude</span>
+    <br/>
+    <span>Speed: @CurrentPosition.coords.speed</span>
+    <br/>
+    <span>Heading: @CurrentPosition.coords.heading</span>
+    <br/>
+}
+<button class="btn btn-primary" onclick="@GeolocationCurrentPosition">Get Current Position</button>
+<input type="checkbox" name="watcherEnabled" onchange="@GeolocationWatch"/>
+
+<br/><br/>
+
+<h3>Keyboard</h3>
+<button class="btn btn-primary" onclick="@KeyboardShow">Show Keyboard</button><br/>
+<button class="btn btn-primary" onclick="@KeyboardSetAccessoryBarVisible">Show Accessory Bar</button>
+<button class="btn btn-primary" onclick="@KeyboardSetAccessoryBarHidden">Hide Accessory Bar</button><br/>
+<button class="btn btn-primary" onclick="@KeyboardHide">Hide Keyboard</button><br/>
+<button class="btn btn-primary" onclick="@KeyboardEvents">Listen to Keyboard Events</button>
+
+<br/><br/>
+
+<h3>Modals</h3>
+<button class="btn btn-primary" onclick="@ModalsAlert">Alert Modal</button><br/>
+<button class="btn btn-primary" onclick="@ModalsConfirm">Confirm Modal</button><br/>
+<button class="btn btn-primary" onclick="@ModalsPrompt">Prompt Modal</button><br/>
+<button class="btn btn-primary" onclick="@ModalsShowActions">Show Actions Modal</button>
+
+<br/><br/>
+
+<h3>Browser</h3>
+<button class="btn btn-primary" onclick="@(() => BrowserOpen(PresentationStyle.Fullscreen))">Open URL (fullscreen)</button><br/>
+<button class="btn btn-primary" onclick="@(() => BrowserOpen(PresentationStyle.Popover))">Open URL (popover)</button><br/>
+<button class="btn btn-primary" onclick="@BrowserPrefetch">Prefetch URL</button><br/>
+Listen to browser finished events: <input type="checkbox" onchange="@BrowserFinished"/><br>
+Listen to browser page loaded events <input type="checkbox" onchange="@BrowserPageLoaded"/><br>
+<button class="btn btn-primary" onclick="@(() => BrowserOpen(PresentationStyle.Fullscreen, "https://marcelooliveira.github.io/"))">Open Prefetched URL</button>
+
+<br/><br/>
+
+<h3>Storage</h3>
+<button class="btn btn-primary" onclick="@StorageSet">Set data</button><br/>
+<button class="btn btn-primary" onclick="@StorageGet">Get data</button><br/>
+<button class="btn btn-primary" onclick="@StorageRemove">Remove entry</button><br/>
+<button class="btn btn-primary" onclick="@StorageKeys">Get keys</button><br/>
+<button class="btn btn-primary" onclick="@StorageClear">Clear storage</button>
+
+<br/><br/>
+
+<h3>Share</h3>
+<button class="btn btn-primary" onclick="@Share">Share the 💘</button>
+
+<br/><br/>
+
+<h3>StatusBar</h3>
+<button class="btn btn-primary" onclick="@StatusBarShow">Show</button>
+<button class="btn btn-primary" onclick="@StatusBarHide">Hide</button><br/>
+<button class="btn btn-primary" onclick="@(() => StatusBarSetBackgroundColor("blue"))">Change bg color to blue</button>
+<button class="btn btn-primary" onclick="@(() => StatusBarSetBackgroundColor("white"))">Change bg color to white</button><br/>
+<button class="btn btn-primary" onclick="@(() => StatusBarSetStyle(StatusBarStyle.Light))">Change style to Light</button>
+<button class="btn btn-primary" onclick="@(() => StatusBarSetStyle(StatusBarStyle.Dark))">Change style to Dark</button>
+
+<br/><br/>
+
+<h3>SplashScreen</h3>
+<button class="btn btn-primary" onclick="@SplashScreenShow">Show</button>
+
+<br/><br/>
+
+<h3>Network</h3>
+@if (CurrentNetworkStatus != null) {
+    <span>Connected: @CurrentNetworkStatus.connected</span>
+    <br/>
+    <span>Connection Type: @CurrentNetworkStatus.connectionType</span>
+    <br/>
+}
+<button class="btn btn-primary" onclick="@NetworkCurrentStatus">Current Status</button>
+<input type="checkbox" onchange="@NetworkListener"/>
+
+<br/><br/>
+
+<h3>Motion</h3>
+@if (CurrentAccel != null) {
+    <span>Current Motion State:</span>
+    <span>Interval: @CurrentAccel.interval</span>
+    <br/>
+    <span>Acceleration: [@CurrentAccel.acceleration.x, @CurrentAccel.acceleration.y, @CurrentAccel.acceleration.z]</span>
+    <br/>
+    <span>Acceleration (including gravity): [@CurrentAccel.accelerationIncludingGravity.x, @CurrentAccel.accelerationIncludingGravity.y, @CurrentAccel.accelerationIncludingGravity.z]</span>
+    <br/>
+    <span>Rotation Rate: alpha=@CurrentAccel.rotationRate.alpha, beta=@CurrentAccel.rotationRate.beta, gamma=@CurrentAccel.rotationRate.gamma</span>
+    <br/>
+}
+@if (CurrentOrientation != null) {
+    <span>Current Motion Orientation: alpha=@CurrentOrientation.alpha, beta=@CurrentOrientation.beta, gamma=@CurrentOrientation.gamma</span>
+    <br/>
+}
+<span>Original Window Orientation: @OriginalWindowOrientation</span><br/>
+<span>Updated Window Orientation: @UpdatedWindowOrientation</span><br/>
+Listen to Window Orientation Updates: <input type="checkbox" onchange="@WindowOrientationUpdates"/>
+Listen to Acceleration events: <input type="checkbox" onchange="@MotionAccel"/><br/>
+Listen to Orientation events: <input type="checkbox" onchange="@MotionOrientation"/>
+
+<br/><br/>
+
+<h3>Haptics</h3>
+<button class="btn btn-primary" onclick="@HapticsVibrate">Vibrate Device</button><br/>
+<button class="btn btn-primary" onclick="@(() => HapticsImpact(HapticsImpactStyle.Heavy))">Heavy Impact</button><br/>
+<button class="btn btn-primary" onclick="@(() => HapticsImpact(HapticsImpactStyle.Medium))">Medium Impact</button><br/>
+<button class="btn btn-primary" onclick="@(() => HapticsImpact(HapticsImpactStyle.Light))">Light Impact</button><br/>
+<button class="btn btn-primary" onclick="@HapticsSelectionStart">Selection Start</button><br/>
+<button class="btn btn-primary" onclick="@HapticsSelectionChanged">Selection Changed</button><br/>
+<button class="btn btn-primary" onclick="@HapticsSelectionEnd">Selection End</button>
+
+<br/><br/>
+
+<h3>Filesystem</h3>
+
+<button class="btn btn-primary" onclick="@FilesystemWriteFile">Write File</button><br/>
+<button class="btn btn-primary" onclick="@FilesystemAppendFile">Append File</button><br/>
+<button class="btn btn-primary" onclick="@FilesystemReadFile">Read File</button><br/>
+<button class="btn btn-primary" onclick="@FilesystemDeleteFile">Delete File</button><br/>
+<button class="btn btn-primary" onclick="@FilesystemMkdir">Make Dir</button><br/>
+<button class="btn btn-primary" onclick="@FilesystemStat">Stat</button><br/>
+<button class="btn btn-primary" onclick="@FilesystemRmdir">Remove Dir</button><br/>
+<button class="btn btn-primary" onclick="@FilesystemReaddir">Read Dir</button><br/>
+<button class="btn btn-primary" onclick="@FilesystemGetUri">Get Uri</button>
+
+<br/><br/>
+
+<h3>Clipboard</h3>
+
+<button class="btn btn-primary" onclick="@ClipboardWrite">Write</button><br/>
+<button class="btn btn-primary" onclick="@ClipboardRead">Read</button>
+
+<br/><br/>
+
+<h3>BackgroundTask</h3>
+
+<button class="btn btn-primary" onclick="@BackgroundTask">BeforeExit and Finish</button>
+
+<br/><br/>
+
+<h3>App</h3>
+
+<button class="btn btn-primary" onclick="@AppExit">Exit App</button>
+<button class="btn btn-primary" onclick="@AppCanOpenUrl">Can Open Url</button>
+<button class="btn btn-primary" onclick="@AppOpenUrl">Open Url</button>
+<button class="btn btn-primary" onclick="@AppGetLaunchUrl">Get Launch Url</button><br/>
+Listen to State Change events: <input type="checkbox" onchange="@AppStateChange"/><br/>
+Listen to Url Open events: <input type="checkbox" onchange="@AppUrlOpen"/><br/>
+Listen to Restored Result events: <input type="checkbox" onchange="@AppRestoredResult"/><br/>
+Listen to Back Button events: <input type="checkbox" onchange="@AppBackButton"/>
+
+<br/><br/>
+
+<h3>Accessibility</h3>
+
+<button class="btn btn-primary" onclick="@AccessibilityIsScreenReaderEnabled">Is Screen Reader Enabled</button><br/>
+<button class="btn btn-primary" onclick="@AccessibilitySpeak">Speak</button><br/>
+Listen to Back Button events: <input type="checkbox" onchange="@AccessibilityListener"/>
+
+<br/><br/>
+
+@functions {
+    private static void ConsoleLog() => ConsoleBridge.Log("A log from 🔥 Blazor 🔥");
+    private static void ConsoleLogObject() => ConsoleBridge.Log(new DeviceInfo {model = "Tesla P45D"});
+
+    private static void Toast() => ToastBridge.ShowWithShortDuration("A 🍷 to 🔥 Blazor 🔥");
+
+    string ImageSrc;
+
+    private async Task Camera() {
+        var options = new CameraOptions {
+            quality = 90,
+            allowEditing = true,
+            resultType = CameraResultType.Uri,
+            correctOrientation = false
+        };
+        try {
+            var image = await CameraBridge.GetPhoto(options);
+            ImageSrc = image.webPath;
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to take picture: {e.Message}");
+        }
+    }
+
+    DeviceInfo DeviceData;
+
+    private async Task Device() {
+        try {
+            DeviceData = await DeviceBridge.GetInfo();
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to get device info: {e.Message}");
+        }
+    }
+
+    GeolocationPosition CurrentPosition;
+
+    private async Task GeolocationCurrentPosition() {
+        try {
+            CurrentPosition = await GeolocationBridge.GetCurrentPosition();
+            Console.WriteLine(CurrentPosition.timestamp);
+            Console.WriteLine(CurrentPosition.coords);
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to get current position: {e.Message}");
+        }
+    }
+
+    private string WatcherID;
+
+    private async Task GeolocationWatch() {
+        if (WatcherID == null) {
+            try {
+                var opts = new GeolocationOptions {
+                    enableHighAccuracy = false,
+                    requireAltitude = false
+                };
+
+                WatcherID = await GeolocationBridge.WatchPosition(opts, async (newPosition) => {
+                    CurrentPosition = newPosition;
+                    await ToastBridge.ShowWithShortDuration($"Received new position: {newPosition.coords.latitude} : {newPosition.coords.longitude}");
+                });
+
+                await ToastBridge.ShowWithShortDuration($"Registered Watcher: {WatcherID}");
+            }
+            catch (Exception e) {
+                await ToastBridge.ShowWithShortDuration($"Unable to register position watcher: {e.Message}");
+            }
+        }
+        else {
+            try {
+                await GeolocationBridge.ClearWatch(WatcherID);
+                await ToastBridge.ShowWithShortDuration($"Cleared Watcher: {WatcherID}");
+                WatcherID = null;
+                CurrentPosition = null;
+            }
+            catch (Exception e) {
+                await ToastBridge.ShowWithShortDuration($"Unable to clear position watcher: {e.Message}");
+            }
+        }
+    }
+
+    private static async Task KeyboardShow() {
+        try {
+            await KeyboardBridge.Show();
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to show keyboard: {e.Message}");
+        }
+    }
+
+    private static async Task KeyboardSetAccessoryBarVisible() {
+        try {
+            await KeyboardBridge.SetAccessoryBarVisible(true);
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to show accessory bar keyboard: {e.Message}");
+        }
+    }
+
+    private static async Task KeyboardSetAccessoryBarHidden() {
+        try {
+            await KeyboardBridge.SetAccessoryBarVisible(false);
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to hide accessory bar: {e.Message}");
+        }
+    }
+
+    private static async Task KeyboardHide() {
+        try {
+            await KeyboardBridge.Hide();
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to hide keyboard: {e.Message}");
+        }
+    }
+
+    private static async Task KeyboardEvents() {
+        try {
+            await KeyboardBridge.RegisterEventListeners();
+
+            KeyboardBridge.AddEventListener(KeyboardEvent.KeyboardWillShow, (e) =>
+                Console.WriteLine($"🔥 Received KeyboardWillShow event: {e}"));
+            KeyboardBridge.AddEventListener(KeyboardEvent.KeyboardDidShow, (e) =>
+                Console.WriteLine($"🔥 Received KeyboardDidShow event: {e}"));
+            KeyboardBridge.AddEventListener(KeyboardEvent.KeyboardWillHide, (e) =>
+                Console.WriteLine($"🔥 Received KeyboardWillHide event: {e}"));
+            KeyboardBridge.AddEventListener(KeyboardEvent.KeyboardDidHide, (e) =>
+                Console.WriteLine($"🔥 Received KeyboardDidHide event: {e}"));
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to hide keyboard: {e.Message}");
+        }
+    }
+
+    private static async Task ModalsAlert() {
+        try {
+            var options = new AlertOptions {
+                title = "🤖 Bionic Alert",
+                message = "Capacitor Bridge is now available.",
+                buttonTitle = "Got it!"
+            };
+            await ModalsBridge.Alert(options);
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to open modal alert: {e.Message}");
+        }
+    }
+
+    private static async Task ModalsConfirm() {
+        try {
+            var options = new ConfirmOptions {
+                title = "🤖 Bionic Confirm",
+                message = "Adding exoskeleton...",
+                okButtonTitle = "💀 Proceed",
+                cancelButtonTitle = "Stop"
+            };
+            var result = await ModalsBridge.Confirm(options);
+            await ToastBridge.ShowWithShortDuration(result.value
+                ? "💀 You chose to proceed 💀"
+                : "☠ Enjoy your weak limbs ☠");
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to open modal confirm: {e.Message}");
+        }
+    }
+
+    private static async Task ModalsPrompt() {
+        try {
+            var options = new PromptOptions {
+                title = "🤖 Bionic Prompt",
+                message = "Please insert your Bionic name",
+                okButtonTitle = "Move on...",
+                cancelButtonTitle = "Nope",
+                inputPlaceholder = "01001001"
+            };
+            var result = await ModalsBridge.Prompt(options);
+            var msg = result.cancelled ? "I'm 💔" : $"We 💘 you - {result.value}";
+            await ToastBridge.ShowWithShortDuration(msg);
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to open modal confirm: {e.Message}");
+        }
+    }
+
+    private static async Task ModalsShowActions() {
+        try {
+            var options = new ActionSheetOptions {
+                title = "🤖 Bionic Show Actions",
+                message = "Choose your upgrade:",
+                options = new ActionSheetOption[3] {
+                    new ActionSheetOption {
+                        title = "Titanium Exoskeleton",
+                        style = ActionSheetOptionStyle.Default,
+                        icon = "nuclear"
+                    },
+                    new ActionSheetOption {
+                        title = "Cybernetic Eye",
+                        style = ActionSheetOptionStyle.Destructive,
+                        icon = "eye"
+                    },
+                    new ActionSheetOption {
+                        title = "I'm good, thanks!",
+                        style = ActionSheetOptionStyle.Cancel,
+                    }
+                }
+            };
+            var result = await ModalsBridge.ShowActions(options);
+            var msg = "💘 You're already perfect! 💘";
+            if (result.index != options.options.Length - 1) {
+                msg = result.index == 0 ? "Enjoy your new 💪" : "Enjoy your new 👁";
+            }
+            await ToastBridge.ShowWithShortDuration(msg);
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to open modal confirm: {e.Message}");
+        }
+    }
+
+    private static void BrowserOpen(string ps, string url = "https://blazor.net") {
+        try {
+            var options = new BrowserOpenOptions {
+                url = url,
+                presentationStyle = ps,
+                windowName = "Bionic Browser",
+                toolbarColor = "red"
+            };
+            BrowserBridge.Open(options);
+        }
+        catch (Exception e) {
+            ToastBridge.ShowWithShortDuration($"Unable to open url in browser: {e.Message}");
+        }
+    }
+
+    private static void BrowserPrefetch() {
+        try {
+            var options = new BrowserPrefetchOptions {
+                urls = new[] {
+                    "https://marcelooliveira.github.io/"
+                }
+            };
+            BrowserBridge.Prefetch(options);
+        }
+        catch (Exception e) {
+            ToastBridge.ShowWithShortDuration($"Unable to prefetch urls: {e.Message}");
+        }
+    }
+
+    private static bool IsListeningToBrowserFinished;
+
+    private static async void BrowserFinished() {
+        try {
+            if (IsListeningToBrowserFinished) {
+                // Unregister ...
+            }
+            else {
+                await BrowserBridge.ListenToBrowserFinished("test-browser-finished", (id, info) =>
+                    Console.WriteLine($"🔥 Received BrowserFinished event for {id}: {info}"));
+                IsListeningToBrowserFinished = true;
+            }
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to listen to browser finished events: {e.Message}");
+        }
+    }
+
+    private static bool IsListeningToBrowserPageLoaded;
+
+    private static async void BrowserPageLoaded() {
+        try {
+            if (IsListeningToBrowserPageLoaded) {
+                // Unregister ...
+            }
+            else {
+                await BrowserBridge.ListenToBrowserPageLoaded("test-browser-pageloaded", (id, info) =>
+                    Console.WriteLine($"🔥 Received BrowserPageLoaded event for {id}: {info}"));
+                IsListeningToBrowserPageLoaded = true;
+            }
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to listen to browser page loaded events: {e.Message}");
+        }
+    }
+
+    private static async void StorageSet() {
+        try {
+            var data = new FileReadResult {
+                data = "Some Data For Testing"
+            };
+            await StorageBridge.Set("data", data);
+
+            await StorageBridge.Set("string", "a string");
+            await StorageBridge.Set("object", new { type = "object", model = "anonymous", arr = new [] { "an", "array" } });
+            await StorageBridge.Set("number", 123);
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to set storage data: {e.Message}");
+        }
+    }
+
+    private static async void StorageGet() {
+        try {
+            var s = await StorageBridge.Get<string>("string");
+            Console.WriteLine($"💾 string: {s}");
+            var o = await StorageBridge.Get<object>("object");
+            Console.WriteLine($"💾 object: {o}");
+            var n = await StorageBridge.Get<long>("number");
+            Console.WriteLine($"💾 number: {n}");
+            var d = await StorageBridge.Get<FileReadResult>("data");
+            Console.WriteLine($"💾 data: {d}.data={d.data}");
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to get storage data: {e.Message}");
+        }
+    }
+
+    private static async void StorageClear() {
+        try {
+            await StorageBridge.Clear();
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to clear storage: {e.Message}");
+        }
+    }
+
+    private static async void StorageRemove() {
+        try {
+            await StorageBridge.Remove("object");
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to remove entry: {e.Message}");
+        }
+    }
+
+    private static async void StorageKeys() {
+        try {
+            var keys = await StorageBridge.Keys();
+            Console.WriteLine($"🔑 Found keys:");
+            keys.ToList().ForEach(Console.WriteLine);
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to fetch keys from storage: {e.Message}");
+        }
+    }
+
+    private static async void Share() {
+        try {
+            var options = new ShareOptions {
+                title = "Blazor Framework",
+                url = "https://blazor.net",
+                text = "Did you try Blazor yet?",
+                dialogTitle = "Share the Blazor 💙"
+            };
+            var obj = await ShareBridge.Share(options);
+            Console.WriteLine($"🔥 Returned: {obj}");
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to fetch keys from storage: {e.Message}");
+        }
+    }
+
+    private static async void StatusBarShow() {
+        try {
+            await StatusBarBridge.Show();
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to show status bar: {e.Message}");
+        }
+    }
+
+    private static async void StatusBarHide() {
+        try {
+            await StatusBarBridge.Hide();
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to hide status bar: {e.Message}");
+        }
+    }
+
+    private static async void StatusBarSetBackgroundColor(string color) {
+        try {
+            await StatusBarBridge.SetBackgroundColor(color);
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to set status bar bg color: {e.Message}");
+        }
+    }
+
+    private static async void StatusBarSetStyle(StatusBarStyle style) {
+        try {
+            await StatusBarBridge.SetStyle(style);
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to set status bar style: {e.Message}");
+        }
+    }
+
+    private static async void SplashScreenShow() {
+        try {
+            await SplashScreenBridge.Show();
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to show splash screen: {e.Message}");
+        }
+    }
+
+    private NetworkStatus CurrentNetworkStatus;
+
+    private async Task NetworkCurrentStatus() {
+        try {
+            CurrentNetworkStatus = await NetworkBridge.GetStatus();
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to get current network status: {e.Message}");
+        }
+    }
+
+
+    private string NetworkWatcherID;
+
+    private async Task NetworkListener() {
+        if (NetworkWatcherID == null) {
+            NetworkWatcherID = "my-network-listener";
+            try {
+                await NetworkBridge.AddListener(NetworkWatcherID, async (status) => {
+                    CurrentNetworkStatus = status;
+                    StateHasChanged();
+                    var state = status.connected ? "Connected" : "Disconnected";
+                    await ToastBridge.ShowWithShortDuration(
+                        $"💻 Received new network status:\n{state} : {status.connectionType}");
+                });
+
+                await ToastBridge.ShowWithShortDuration($"Registered Network Listener: {NetworkWatcherID}");
+            }
+            catch (Exception e) {
+                await ToastBridge.ShowWithShortDuration($"Unable to register network listener: {e.Message}");
+            }
+        }
+        else {
+            try {
+                await NetworkBridge.RemoveListener(NetworkWatcherID);
+                await ToastBridge.ShowWithShortDuration($"Cleared Network Listener: {NetworkWatcherID}");
+                NetworkWatcherID = null;
+                CurrentNetworkStatus = null;
+            }
+            catch (Exception e) {
+                await ToastBridge.ShowWithShortDuration($"Unable to clear network listener: {e.Message}");
+            }
+        }
+    }
+
+    private int OriginalWindowOrientation;
+    private async Task GetOriginalWindowOrientation() {
+        OriginalWindowOrientation = await MotionBridge.GetWindowOrientation();
+    }
+
+    private int UpdatedWindowOrientation;
+    private bool WindowOrientationUpdatesOn;
+    private async Task WindowOrientationUpdates() {
+        if (WindowOrientationUpdatesOn) {
+            try {
+                await MotionBridge.StopWindowOrientationUpdates();
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+            }
+            WindowOrientationUpdatesOn = false;
+        }
+        else {
+            try {
+                MotionBridge.OnOrientation = async result => {
+                    UpdatedWindowOrientation = result;
+                    await GetOriginalWindowOrientation();
+                    StateHasChanged();
+                };
+
+                await MotionBridge.StartWindowOrientationUpdates();
+                WindowOrientationUpdatesOn = true;
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+            }
+        }
+    }
+
+    private MotionEventResult CurrentAccel;
+    private string MotionAccelWatcherID;
+
+    private async Task MotionAccel() {
+        if (MotionAccelWatcherID == null) {
+            MotionAccelWatcherID = "my-motion-accel-listener";
+            try {
+                await MotionBridge.AddAccelListener(MotionAccelWatcherID, (result) => {
+                    CurrentAccel = result;
+                    StateHasChanged();
+                    Console.WriteLine($"🏎 Received new motion acceleration event");
+                });
+                Console.WriteLine($"Registered Motion Acceleration Listener: {MotionAccelWatcherID}");
+            }
+            catch (Exception e) {
+                await ToastBridge.ShowWithShortDuration($"Unable to register motion acceleration listener: {e.Message}");
+            }
+        }
+        else {
+            try {
+                await MotionBridge.RemoveListener(MotionAccelWatcherID);
+                await ToastBridge.ShowWithShortDuration($"Cleared Motion Acceleration Listener: {MotionAccelWatcherID}");
+            }
+            catch (Exception e) {
+                await ToastBridge.ShowWithShortDuration($"Unable to clear motion acceleration listener: {e.Message}");
+            }
+            MotionAccelWatcherID = null;
+            CurrentAccel = null;
+        }
+    }
+
+    private MotionOrientationEventResult CurrentOrientation;
+    private string MotionOrientationWatcherID;
+
+    private async Task MotionOrientation() {
+        if (MotionOrientationWatcherID == null) {
+            MotionOrientationWatcherID = "my-motion-orientation-listener";
+            try {
+                await MotionBridge.AddOrientationListener(MotionOrientationWatcherID, (result) => {
+                    CurrentOrientation = result;
+                    StateHasChanged();
+                    Console.WriteLine("Received orientation event");
+                });
+                Console.WriteLine($"Registered Motion Orientation Listener: {MotionOrientationWatcherID}");
+            }
+            catch (Exception e) {
+                await ToastBridge.ShowWithShortDuration($"Unable to register motion orientation listener: {e.Message}");
+            }
+        }
+        else {
+            try {
+                await MotionBridge.RemoveListener(MotionOrientationWatcherID);
+                await ToastBridge.ShowWithShortDuration($"Cleared Motion Orientation Listener: {MotionOrientationWatcherID}");
+            }
+            catch (Exception e) {
+                await ToastBridge.ShowWithShortDuration($"Unable to clear motion orientation listener: {e.Message}");
+            }
+            MotionOrientationWatcherID = null;
+            CurrentOrientation = null;
+        }
+    }
+
+    private static async void HapticsVibrate() {
+        try {
+            await HapticsBridge.Vibrate();
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to vibrate device: {e.Message}");
+        }
+    }
+
+    private static async void HapticsImpact(HapticsImpactStyle style) {
+        try {
+            await HapticsBridge.Impact(style);
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to do haptic impact: {e.Message}");
+        }
+    }
+
+    private static async void HapticsSelectionStart() {
+        try {
+            await HapticsBridge.SelectionStart();
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to start haptic selection: {e.Message}");
+        }
+    }
+
+    private static async void HapticsSelectionChanged() {
+        try {
+            await HapticsBridge.SelectionChanged();
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to change haptic selection: {e.Message}");
+        }
+    }
+
+    private static async void HapticsSelectionEnd() {
+        try {
+            await HapticsBridge.SelectionEnd();
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to end haptic selection: {e.Message}");
+        }
+    }
+
+    private static async void FilesystemWriteFile() {
+        try {
+            var options = new FileWriteOptions {
+                path =  "text.txt",
+                data = "File write test to Documents",
+                directory = FilesystemDirectory.Documents,
+                encoding = FilesystemEncoding.UTF8
+            };
+            var obj = await FilesystemBridge.WriteFile(options);
+            Console.WriteLine(obj);
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to write file: {e.Message}");
+        }
+    }
+
+    private static async void FilesystemReadFile() {
+        try {
+            var options = new FileReadOptions {
+                path =  "text.txt",
+                directory = FilesystemDirectory.Documents,
+                encoding = FilesystemEncoding.UTF8
+            };
+            var obj = await FilesystemBridge.ReadFile(options);
+            Console.WriteLine($"Data from file: {obj.data}");
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to read file: {e.Message}");
+        }
+    }
+
+    private static async void FilesystemAppendFile() {
+        try {
+            var options = new FileAppendOptions {
+                path =  "text.txt",
+                data = "File Append test",
+                directory = FilesystemDirectory.Documents,
+                encoding = FilesystemEncoding.UTF8
+            };
+            var obj = await FilesystemBridge.AppendFile(options);
+            Console.WriteLine(obj);
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to append file: {e.Message}");
+        }
+    }
+
+    private static async void FilesystemDeleteFile() {
+        try {
+            var options = new FileDeleteOptions {
+                path =  "text.txt",
+                directory = FilesystemDirectory.Documents,
+            };
+            var obj = await FilesystemBridge.DeleteFile(options);
+            Console.WriteLine(obj);
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to delete file: {e.Message}");
+        }
+    }
+
+    private static async void FilesystemMkdir() {
+        try {
+            var options = new MkdirOptions {
+                path =  "foo/baa/doo",
+                directory = FilesystemDirectory.Documents,
+                createIntermediateDirectories = true
+            };
+            var obj = await FilesystemBridge.Mkdir(options);
+            Console.WriteLine(obj);
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to make dir: {e.Message}");
+        }
+    }
+
+    private static async void FilesystemStat() {
+        try {
+            var options = new StatOptions {
+                path =  "foo/baa/doo",
+                directory = FilesystemDirectory.Documents
+            };
+            var obj = await FilesystemBridge.Stat(options);
+            Console.WriteLine($"{obj.type} : {obj.ctime} : {obj.mtime} : {obj.size} : {obj.uri}");
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to stat dir: {e.Message}");
+        }
+    }
+
+    private static async void FilesystemRmdir() {
+        try {
+            var options = new RmdirOptions {
+                path =  "foo/baa/doo",
+                directory = FilesystemDirectory.Documents
+            };
+            var obj = await FilesystemBridge.Rmdir(options);
+            Console.WriteLine(obj);
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to remove dir: {e.Message}");
+        }
+    }
+
+    private static async void FilesystemReaddir() {
+        try {
+            var options = new ReaddirOptions {
+                path =  "",
+                directory = FilesystemDirectory.Documents
+            };
+            var obj = await FilesystemBridge.ReadDir(options);
+            foreach (var file in obj.files) {
+                Console.WriteLine(file);
+            }
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to read dir: {e.Message}");
+        }
+    }
+
+    private static async void FilesystemGetUri() {
+        try {
+            var options = new GetUriOptions {
+                path =  "text.txt",
+                directory = FilesystemDirectory.Documents
+            };
+            var obj = await FilesystemBridge.GetUri(options);
+            Console.WriteLine(obj.uri);
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to get uri: {e.Message}");
+        }
+    }
+
+    private static async void ClipboardWrite() {
+        try {
+            var data = new ClipboardWrite {
+                str = "Clipboard Data String"
+            };
+            await ClipboardBridge.Write(data);
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to write to clipboard: {e.Message}");
+        }
+    }
+
+    private static async void ClipboardRead() {
+        try {
+            var obj = await ClipboardBridge.Read(ClipboardReadType.String);
+            Console.WriteLine($"Data from Clipboard: {obj.value}");
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to read from clipboard: {e.Message}");
+        }
+    }
+
+    private static async void BackgroundTask() {
+        string id = null;
+        try {
+            id = await BackgroundTaskBridge.BeforeExit(async () => {
+                Console.WriteLine($"*** ABOUT TO EXIT *** {id}");
+                await BackgroundTaskBridge.Finish(id);
+            });
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to register background task: {e.Message}");
+        }
+    }
+
+    private string AppStateChangeWatcherID;
+    private async Task AppStateChange() {
+        if (AppStateChangeWatcherID == null) {
+            AppStateChangeWatcherID = "app-state-change-listener";
+            try {
+                await AppBridge.AddAppStateChangeListener(AppStateChangeWatcherID, async (result) => {
+                    await ToastBridge.ShowWithShortDuration($"Received new state change event {result.isActive}");
+                });
+                await ToastBridge.ShowWithShortDuration($"Registered App State Change Listener: {AppStateChangeWatcherID}");
+            }
+            catch (Exception e) {
+                await ToastBridge.ShowWithShortDuration($"Unable to register app state changed listener: {e.Message}");
+            }
+        }
+        else {
+            try {
+                await AppBridge.RemoveListener(AppStateChangeWatcherID);
+                await ToastBridge.ShowWithShortDuration($"Cleared app State Changed Listener: {AppStateChangeWatcherID}");
+                AppStateChangeWatcherID = null;
+            }
+            catch (Exception e) {
+                await ToastBridge.ShowWithShortDuration($"Unable to clear app state changed listener: {e.Message}");
+            }
+        }
+    }
+
+    private string AppUrlOpenWatcherID;
+    private async Task AppUrlOpen() {
+        if (AppUrlOpenWatcherID == null) {
+            AppUrlOpenWatcherID = "app-url-open-listener";
+            try {
+                await AppBridge.AddAppUrlOpenListener(AppUrlOpenWatcherID, async (result) => {
+                    await ToastBridge.ShowWithShortDuration($"Received new url open event {result.url}");
+                });
+                await ToastBridge.ShowWithShortDuration($"Registered App Url Open Listener: {AppUrlOpenWatcherID}");
+            }
+            catch (Exception e) {
+                await ToastBridge.ShowWithShortDuration($"Unable to register app url open listener: {e.Message}");
+            }
+        }
+        else {
+            try {
+                await AppBridge.RemoveListener(AppUrlOpenWatcherID);
+                await ToastBridge.ShowWithShortDuration($"Cleared app Url Open Listener: {AppUrlOpenWatcherID}");
+                AppUrlOpenWatcherID = null;
+            }
+            catch (Exception e) {
+                await ToastBridge.ShowWithShortDuration($"Unable to clear app url open listener: {e.Message}");
+            }
+        }
+    }
+
+    private string AppRestoredResultWatcherID;
+    private async Task AppRestoredResult() {
+        if (AppRestoredResultWatcherID == null) {
+            AppRestoredResultWatcherID = "app-restored-result-listener";
+            try {
+                await AppBridge.AddAppRestoredResultListener(AppRestoredResultWatcherID, async (result) => {
+                    await ToastBridge.ShowWithShortDuration($"Received new restored result event {result.methodName}");
+                });
+                await ToastBridge.ShowWithShortDuration($"Registered App Restored Result Listener: {AppRestoredResultWatcherID}");
+            }
+            catch (Exception e) {
+                await ToastBridge.ShowWithShortDuration($"Unable to register app restored result listener: {e.Message}");
+            }
+        }
+        else {
+            try {
+                await AppBridge.RemoveListener(AppRestoredResultWatcherID);
+                await ToastBridge.ShowWithShortDuration($"Cleared app Restored Result Listener: {AppRestoredResultWatcherID}");
+                AppRestoredResultWatcherID = null;
+            }
+            catch (Exception e) {
+                await ToastBridge.ShowWithShortDuration($"Unable to clear app restored result listener: {e.Message}");
+            }
+        }
+    }
+
+    private string AppBackButtonWatcherID;
+    private async Task AppBackButton() {
+        if (AppBackButtonWatcherID == null) {
+            AppBackButtonWatcherID = "app-back-button-listener";
+            try {
+                await AppBridge.AddAppBackButtonListener(AppBackButtonWatcherID, async (result) => {
+                    await ToastBridge.ShowWithShortDuration($"Received new back button event {result.url}");
+                });
+                await ToastBridge.ShowWithShortDuration($"Registered App Back Button Listener: {AppBackButtonWatcherID}");
+            }
+            catch (Exception e) {
+                await ToastBridge.ShowWithShortDuration($"Unable to register app back button listener: {e.Message}");
+            }
+        }
+        else {
+            try {
+                await AppBridge.RemoveListener(AppBackButtonWatcherID);
+                await ToastBridge.ShowWithShortDuration($"Cleared app Back Button Listener: {AppBackButtonWatcherID}");
+                AppBackButtonWatcherID = null;
+            }
+            catch (Exception e) {
+                await ToastBridge.ShowWithShortDuration($"Unable to clear app back button listener: {e.Message}");
+            }
+        }
+    }
+
+    private static async void AppExit() {
+        try {
+            await AppBridge.ExitApp();
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to exit app: {e.Message}");
+        }
+    }
+
+    private static async void AppCanOpenUrl() {
+        try {
+            var result = await AppBridge.CanOpenUrl("bionic.bridge.capacitor");
+            await ToastBridge.ShowWithShortDuration($"Can Open Url: {result}");
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to call can open url: {e.Message}");
+        }
+    }
+
+    private static async void AppOpenUrl() {
+        try {
+            var result = await AppBridge.OpenUrl("bionic.bridge.capacitor://");
+            await ToastBridge.ShowWithShortDuration($"Open Url: {result}");
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to open url: {e.Message}");
+        }
+    }
+
+    private static async void AppGetLaunchUrl() {
+        try {
+            var result = await AppBridge.GetLaunchUrl();
+            await ToastBridge.ShowWithShortDuration($"Get Launch Url: {result}");
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to get launch url: {e.Message}");
+        }
+    }
+
+    private static async void AccessibilityIsScreenReaderEnabled() {
+        try {
+            var result = await AccessibilityBridge.IsScreenReaderEnabled();
+            await ToastBridge.ShowWithShortDuration($"Is Screen Reader Enabled: {result}");
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to check if screen reader is enabled: {e.Message}");
+        }
+    }
+
+    private static async void AccessibilitySpeak() {
+        try {
+            var options = new AccessibilitySpeakOptions {
+                value = "Hello! How are you?",
+                language = "en"
+            };
+            await AccessibilityBridge.Speak(options);
+        }
+        catch (Exception e) {
+            await ToastBridge.ShowWithShortDuration($"Unable to speak: {e.Message}");
+        }
+    }
+
+    private string AccessibilityWatcherID;
+    private async Task AccessibilityListener() {
+        if (AccessibilityWatcherID == null) {
+            AccessibilityWatcherID = "accessibility-listener";
+            try {
+                await AccessibilityBridge.AddListener(AccessibilityWatcherID, async (result) => {
+                    await ToastBridge.ShowWithShortDuration($"Received accessibility screen reader state change event {result}");
+                });
+                await ToastBridge.ShowWithShortDuration($"Registered Accessibility Listener: {AccessibilityWatcherID}");
+            }
+            catch (Exception e) {
+                await ToastBridge.ShowWithShortDuration($"Unable to register accessibility listener: {e.Message}");
+            }
+        }
+        else {
+            try {
+                await AccessibilityBridge.RemoveListener(AccessibilityWatcherID);
+                await ToastBridge.ShowWithShortDuration($"Cleared Accessibility Listener: {AccessibilityWatcherID}");
+                AccessibilityWatcherID = null;
+            }
+            catch (Exception e) {
+                await ToastBridge.ShowWithShortDuration($"Unable to clear accessibility listener: {e.Message}");
+            }
+        }
+    }
+}

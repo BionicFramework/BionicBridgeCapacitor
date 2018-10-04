@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Bionic Bridge Capacitor</Title>
+    <Description>Bionic Bridge for Capacitor</Description>
+    <AssemblyName>BionicBridgeCapacitor</AssemblyName>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);IncludeP2POutput</TargetsForTfmSpecificBuildOutput>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../Bionic.Bridge.Capacitor.JS/Bionic.Bridge.Capacitor.JS.csproj" PrivateAssets="All" />
+  </ItemGroup>
+
+  <Target Name="IncludeP2POutput">
+    <ItemGroup>
+      <BuildOutputInPackage Include="$(OutputPath)Bionic.Bridge.Capacitor.JS.dll" />
+    </ItemGroup>
+  </Target>
+</Project>

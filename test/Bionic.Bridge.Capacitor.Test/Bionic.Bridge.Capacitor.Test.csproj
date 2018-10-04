@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <RunCommand>dotnet</RunCommand>
+    <RunArguments>blazor serve</RunArguments>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BionicExtensions" Version="0.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.5.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.5.1" />
+    <DotNetCliToolReference Include="Microsoft.AspNetCore.Blazor.Cli" Version="0.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Bionic.Bridge.Capacitor.JS\Bionic.Bridge.Capacitor.JS.csproj" />
+    <ProjectReference Include="..\..\src\Bionic.Bridge.Capacitor\Bionic.Bridge.Capacitor.csproj" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Watch Include="**/*.cshtml;**/*.scss" Visible="false" />
+    <Watch Remove="platforms\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="platforms\**" />
+  </ItemGroup>
+
+  <Target Name="CompileSCSS" BeforeTargets="Build" Condition="Exists('App.scss')">
+    <Message Importance="high" Text="Compiling SCSS" />
+    <Exec Command="scss --no-cache --update ./App.scss:./wwwroot/css/App.css" />
+  </Target>
+</Project>

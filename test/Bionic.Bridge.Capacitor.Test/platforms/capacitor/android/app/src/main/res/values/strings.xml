@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">CapacitorBridge</string>
+    <string name="title_activity_main">CapacitorBridge</string>
+    <string name="package_name">bionic.bridge.capacitor</string>
+    <string name="fileprovider_authority">bionic.bridge.capacitor.fileprovider</string>
+    <string name="custom_url_scheme">bionic.bridge.capacitor</string>
+</resources>
