@@ -25,8 +25,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.1; netstandard2.0</TargetFrameworks>
-    <TestProjectTargetFrameworks>netcoreapp2.1; netstandard2.0</TestProjectTargetFrameworks>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <TestProjectTargetFramework>netstandard2.0</TestProjectTargetFramework>
   </PropertyGroup>
 
   <!-- Versioning properties -->
