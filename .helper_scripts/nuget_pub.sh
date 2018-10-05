@@ -19,7 +19,8 @@ fi
 ${DIR}/build_release.sh
 
 echo "Pushing BionicBridgeCapacitor.$1.nupkg to NuGet..."
-dotnet nuget push ./src/BionicBridgeCapacitor/nupkg/BionicBridgeCapacitor.$1.nupkg --source https://api.nuget.org/v3/index.json --api-key ${NUGET_BIONIC_KEY}
+
+dotnet nuget push ./src/Bionic.Bridge.Capacitor/nupkg/BionicBridgeCapacitor.$1.nupkg --source https://api.nuget.org/v3/index.json --api-key ${NUGET_BIONIC_KEY}
 if [ $? = 0 ]
   then
     echo "Completed pushing BionicBridgeCapacitor.$1.nupkg to NuGet. Should be available in a few minutes."
