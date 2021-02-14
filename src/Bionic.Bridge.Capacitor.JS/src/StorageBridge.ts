@@ -29,7 +29,7 @@ export class StorageBridge implements IStorage {
     if (!Storage) return Promise.reject("Storage not available.");
     try {
       const result = await Storage.get({key});
-      return new Promise<any | null>(resolve => resolve(result ? JSON.parse(result.value) : null));
+      return new Promise<any | null>(resolve => resolve(result!==null && result.value!==null ? JSON.parse(result.value) : null));
     } catch (e) {
       return new Promise<any | null>((r, reject) => reject(e.message));
     }

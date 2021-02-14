@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+	  <TargetFramework>net5.0</TargetFramework>
     <Title>Bionic Bridge Capacitor</Title>
     <Description>Bionic Bridge for Ionic's Capacitor Platform APIs</Description>
     <AssemblyName>BionicBridgeCapacitor</AssemblyName>
