@@ -127,7 +127,7 @@ export class FilesystemBridge implements IFilesystem {
       case 5:
         return FilesystemDirectory.ExternalStorage;
       default:
-        return FilesystemDirectory.Application;
+        return FilesystemDirectory.Documents;
     }
   }
 }

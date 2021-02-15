@@ -11,7 +11,7 @@ interface IClipboard {
 export class ClipboardBridge implements IClipboard {
   async read(type: number): Promise<ClipboardReadResult> {
     if (!Clipboard) return Promise.reject("Clipboard not available.");
-    return await Clipboard.read({type: ClipboardBridge.translateClipboardType(type)});
+    return await Clipboard.read();
   }
 
   async write(data: any): Promise<void> {
